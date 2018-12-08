@@ -13,7 +13,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
     port := os.Getenv("ADVISER_GO_PORT")
-    fmt.Println(port)
     if port == "" {
         log.Fatal("ADVISER_GO_PORT must be set")
     }
