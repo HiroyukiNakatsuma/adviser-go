@@ -1,22 +1,9 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "net/http"
-    "os"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/api"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hello, %q", r.URL.Path[1:])
-}
-
 func main() {
-    port := os.Getenv("PORT")
-    if port == "" {
-        log.Fatal("PORT must be set")
-    }
-
-    http.HandleFunc("/", handler)
-    http.ListenAndServe(":"+port, nil)
+    api.Run()
 }
