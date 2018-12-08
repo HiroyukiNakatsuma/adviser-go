@@ -12,9 +12,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-    port := os.Getenv("ADVISER_GO_PORT")
+    port := os.Getenv("PORT")
     if port == "" {
-        log.Fatal("ADVISER_GO_PORT must be set")
+        log.Fatal("PORT must be set")
     }
 
     http.HandleFunc("/", handler)
