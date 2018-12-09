@@ -5,6 +5,8 @@ import (
     "os"
     "log"
 
+    "github.com/HiroyukiNakatsuma/adviser-go/app/interface/controller"
+
     "github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -29,14 +31,13 @@ func LinebotHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
+    var replyContent string
     for _, event := range events {
-        if event.Type == linebot.EventTypeMessage {
-            switch message := event.Message.(type) {
-            case *linebot.TextMessage:
-                if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
-                    log.Print(err)
-                }
-            }
+
+        replyContent = controller.Reply(event)
+
+        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyContent)).Do(); err != nil {
+            log.Print(err)
         }
     }
 }
