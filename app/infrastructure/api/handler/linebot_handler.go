@@ -14,8 +14,8 @@ var Cli *linebot.Client
 
 func init() {
     bot, err := linebot.New(
-        os.Getenv("CHANNEL_SECRET"),
-        os.Getenv("CHANNEL_TOKEN"),
+        os.Getenv("CHANNEL_SECRET_ADVISER"),
+        os.Getenv("CHANNEL_TOKEN_ADVISER"),
     )
     if err != nil {
         log.Fatal(err)
