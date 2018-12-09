@@ -1,4 +1,4 @@
-package api
+package router
 
 import (
     "os"
@@ -14,6 +14,7 @@ func Run() {
         log.Fatal("PORT must be set")
     }
 
+    http.HandleFunc("/linebot/message", handler.LinebotHandler)
     http.HandleFunc("/", handler.HelloHandler)
     http.ListenAndServe(":"+port, nil)
 }
