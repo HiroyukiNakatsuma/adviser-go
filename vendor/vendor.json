@@ -1,3 +1,13 @@
 {
-  "rootPath": "github.com/HiroyukiNakatsuma/adviser-go"
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "+AFpii7IfZSiqfUIddwXuniOuoo=",
+			"path": "github.com/line/line-bot-sdk-go/linebot",
+			"revision": "f1e37ce560f186e87cc2c4ec0ffd9d7da814fccc",
+			"revisionTime": "2018-11-30T07:22:07Z"
+		}
+	],
+	"rootPath": "github.com/HiroyukiNakatsuma/adviser-go"
 }
