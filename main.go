@@ -1,9 +1,9 @@
 package main
 
 import (
-    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/api"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/api/router"
 )
 
 func main() {
-    api.Run()
+    router.Run()
 }
