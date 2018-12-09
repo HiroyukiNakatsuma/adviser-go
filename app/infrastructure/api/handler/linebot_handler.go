@@ -24,6 +24,7 @@ func init() {
 }
 
 func LinebotHandler(w http.ResponseWriter, r *http.Request) {
+    log.Printf("Start \"/%s\"", r.URL.Path[1:])
     events, err := cli.ParseRequest(r)
     if err != nil {
         if err == linebot.ErrInvalidSignature {
