@@ -12,7 +12,20 @@ import (
 
 var cli *linebot.Client
 
-func init() {
+// func init() {
+//     bot, err := linebot.New(
+//         os.Getenv("CHANNEL_SECRET_ADVISER"),
+//         os.Getenv("CHANNEL_TOKEN_ADVISER"),
+//     )
+//     if err != nil {
+//         log.Fatal(err)
+//     }
+//     cli = bot
+// }
+
+func LinebotHandler(w http.ResponseWriter, r *http.Request) {
+    log.Printf("Start \"/%s\"", r.URL.Path[1:])
+
     bot, err := linebot.New(
         os.Getenv("CHANNEL_SECRET_ADVISER"),
         os.Getenv("CHANNEL_TOKEN_ADVISER"),
@@ -21,10 +34,7 @@ func init() {
         log.Fatal(err)
     }
     cli = bot
-}
 
-func LinebotHandler(w http.ResponseWriter, r *http.Request) {
-    log.Printf("Start \"/%s\"", r.URL.Path[1:])
     events, err := cli.ParseRequest(r)
     if err != nil {
         if err == linebot.ErrInvalidSignature {
