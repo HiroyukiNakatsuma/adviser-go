@@ -15,6 +15,3 @@
 /.idea/*
 .idea
 *.iml
-
-# Vendor
-/vendor/*
