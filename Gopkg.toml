@@ -37,4 +37,4 @@
   root-package = "github.com/HiroyukiNakatsuma/adviser-go"
   go-version = "go1.10.3"
   install = ["./cmd/..."]
-  ensure = "false"
+  ensure = "true"
