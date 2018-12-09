@@ -24,6 +24,11 @@
 #   go-tests = true
 #   unused-packages = true
 
+[metadata.heroku]
+  root-package = "github.com/HiroyukiNakatsuma/adviser-go"
+  go-version = "go1.10.3"
+  install = ["./cmd/..."]
+  ensure = "true"
 
 [[constraint]]
   name = "github.com/line/line-bot-sdk-go"
@@ -32,9 +37,3 @@
 [prune]
   go-tests = true
   unused-packages = true
-
-[metadata.heroku]
-  root-package = "github.com/HiroyukiNakatsuma/adviser-go"
-  go-version = "go1.10.3"
-  install = ["./cmd/..."]
-  ensure = "true"
