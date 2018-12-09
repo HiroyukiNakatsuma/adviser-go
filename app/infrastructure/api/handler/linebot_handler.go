@@ -10,7 +10,7 @@ import (
     "github.com/line/line-bot-sdk-go/linebot"
 )
 
-var Cli *linebot.Client
+var cli *linebot.Client
 
 func init() {
     bot, err := linebot.New(
@@ -20,11 +20,11 @@ func init() {
     if err != nil {
         log.Fatal(err)
     }
-    Cli = bot
+    cli = bot
 }
 
 func LinebotHandler(w http.ResponseWriter, r *http.Request) {
-    events, err := Cli.ParseRequest(r)
+    events, err := cli.ParseRequest(r)
     if err != nil {
         if err == linebot.ErrInvalidSignature {
             w.WriteHeader(400)
@@ -34,5 +34,5 @@ func LinebotHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    controller.Reply(events)
+    controller.Reply(cli, events)
 }
