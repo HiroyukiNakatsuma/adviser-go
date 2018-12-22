@@ -10,6 +10,17 @@ import (
     "github.com/line/line-bot-sdk-go/linebot"
 )
 
+var bot *linebot.Client
+
+func getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse) {
+    res, err := bot.GetProfile(src.UserID).Do()
+    if err != nil {
+        log.Print(err)
+    }
+    log.Printf("Complete Getting User. userId: %s", res.UserID)
+    return
+}
+
 func LinebotHandler(w http.ResponseWriter, r *http.Request) {
     log.Printf("Start \"/%s\"", r.URL.Path[1:])
 
@@ -33,8 +44,8 @@ func LinebotHandler(w http.ResponseWriter, r *http.Request) {
 
     var replyContent string
     for _, event := range events {
-
-        replyContent = controller.Reply(event)
+        profile := getUserProfile(event.Source)
+        replyContent = controller.Reply(event, profile)
 
         if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyContent)).Do(); err != nil {
             log.Print(err)

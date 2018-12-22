@@ -6,11 +6,11 @@ import (
     "github.com/line/line-bot-sdk-go/linebot"
 )
 
-func Reply(event *linebot.Event) (replyContent string) {
+func Reply(event *linebot.Event, profile *linebot.UserProfileResponse) (replyContent string) {
     if event.Type == linebot.EventTypeMessage {
         switch message := event.Message.(type) {
         case *linebot.TextMessage:
-            replyContent = usecase.ReplyEcho(message.Text)
+            replyContent = usecase.ReplyContent(message.Text, profile.DisplayName)
         }
     }
 
