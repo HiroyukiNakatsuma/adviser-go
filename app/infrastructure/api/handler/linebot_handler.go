@@ -10,9 +10,19 @@ import (
     "github.com/line/line-bot-sdk-go/linebot"
 )
 
-var bot *linebot.Client
+func getClient() (bot *linebot.Client) {
+    bot, err := linebot.New(
+        os.Getenv("CHANNEL_SECRET_ADVISER"),
+        os.Getenv("CHANNEL_TOKEN_ADVISER"),
+    )
+    if err != nil {
+        log.Fatal(err)
+    }
+    return
+}
 
 func getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse) {
+    bot := getClient()
     res, err := bot.GetProfile(src.UserID).Do()
     if err != nil {
         log.Print(err)
@@ -24,16 +34,8 @@ func getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse)
 func LinebotHandler(w http.ResponseWriter, r *http.Request) {
     log.Printf("Start \"/%s\"", r.URL.Path[1:])
 
-    bot, err := linebot.New(
-        os.Getenv("CHANNEL_SECRET_ADVISER"),
-        os.Getenv("CHANNEL_TOKEN_ADVISER"),
-    )
-    if err != nil {
-        log.Fatal(err)
-    }
-
+    bot := getClient()
     events, err := bot.ParseRequest(r)
-    log.Printf("events: %s", events)
     if err != nil {
         if err == linebot.ErrInvalidSignature {
             w.WriteHeader(400)
