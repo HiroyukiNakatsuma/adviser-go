@@ -33,6 +33,7 @@ func LinebotHandler(w http.ResponseWriter, r *http.Request) {
     }
 
     events, err := bot.ParseRequest(r)
+    log.Printf("events: %s", events)
     if err != nil {
         if err == linebot.ErrInvalidSignature {
             w.WriteHeader(400)
