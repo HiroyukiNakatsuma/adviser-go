@@ -28,6 +28,9 @@ func getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse)
         log.Print(err)
     }
     log.Printf("Complete Getting User. userId: %s", res.UserID)
+    log.Printf("userId: %s", src.UserID)
+    log.Printf("groupId: %s", src.GroupID)
+    log.Printf("roomId: %s", src.RoomID)
     return
 }
 
