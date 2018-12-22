@@ -24,9 +24,9 @@ func getClient() (bot *linebot.Client) {
 func getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse) {
     bot := getClient()
     var err error
-    if &src.GroupID != nil {
+    if len(src.GroupID) != 0 {
         res, err = bot.GetGroupMemberProfile(src.GroupID, src.UserID).Do()
-    } else if &src.RoomID != nil {
+    } else if len(src.RoomID) != 0 {
         res, err = bot.GetRoomMemberProfile(src.RoomID, src.UserID).Do()
     } else {
         res, err = bot.GetProfile(src.UserID).Do()
