@@ -23,14 +23,18 @@ func getClient() (bot *linebot.Client) {
 
 func getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse) {
     bot := getClient()
-    res, err := bot.GetProfile(src.UserID).Do()
+    var err error
+    if &src.GroupID != nil {
+        res, err = bot.GetGroupMemberProfile(src.GroupID, src.UserID).Do()
+    } else if &src.RoomID != nil {
+        res, err = bot.GetRoomMemberProfile(src.RoomID, src.UserID).Do()
+    } else {
+        res, err = bot.GetProfile(src.UserID).Do()
+    }
     if err != nil {
         log.Print(err)
     }
-    log.Printf("Complete Getting User. userId: %s", res.UserID)
-    log.Printf("userId: %s", src.UserID)
-    log.Printf("groupId: %s", src.GroupID)
-    log.Printf("roomId: %s", src.RoomID)
+    log.Printf("Get User. userId: %s", res.UserID)
     return
 }
 
