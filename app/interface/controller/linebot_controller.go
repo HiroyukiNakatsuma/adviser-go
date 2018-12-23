@@ -1,7 +1,7 @@
 package controller
 
 import (
-    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/service"
 
     "github.com/line/line-bot-sdk-go/linebot"
 )
@@ -10,7 +10,9 @@ func Reply(event *linebot.Event, profile *linebot.UserProfileResponse) (replyCon
     if event.Type == linebot.EventTypeMessage {
         switch message := event.Message.(type) {
         case *linebot.TextMessage:
-            replyContent = usecase.ReplyContent(message.Text, profile.DisplayName)
+            replyContent = service.ReplyContent4PlaneMessage(message.Text, profile.DisplayName)
+        case *linebot.LocationMessage:
+            replyContent = service.ReplyContent4Location(message.Latitude, message.Longitude)
         }
     }
 
