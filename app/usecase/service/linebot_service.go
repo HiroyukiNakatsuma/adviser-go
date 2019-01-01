@@ -12,6 +12,7 @@ import (
 )
 
 const firstGreetingMessage = "さん、よろしくお願いします"
+const noContentMessage = "ごめんなさい。該当するコンテンツがありませんでした。。"
 const gnabiEndpoint = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
 const gnaviCreditText = "Supported by ぐるなびWebService : https://api.gnavi.co.jp/api/scope/"
 
@@ -88,6 +89,10 @@ func getRestaurants(latitude float64, longitude float64, isNoSmoking bool) (repl
 
     for _, rest := range gnavi.Restaurants {
         reply += fmt.Sprintf("%s\n", rest.Url)
+    }
+
+    if len(gnavi.Restaurants) == 0 {
+        reply = fmt.Sprintf("%s\n", noContentMessage)
     }
 
     return reply + gnaviCreditText
