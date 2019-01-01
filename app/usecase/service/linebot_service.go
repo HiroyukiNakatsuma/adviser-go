@@ -75,6 +75,8 @@ func ReplyContent4PlaneMessage(inputMes string, userName string) (reply string) 
 func getRestaurants(latitude float64, longitude float64, isNoSmoking bool) (reply string) {
     var client = &http.Client{Timeout: 10 * time.Second}
     url := gnabiEndpoint + fmt.Sprintf("?keyid=%s&latitude=%f&longitude=%f&no_smoking=%d", os.Getenv("GNAVI_ACCESS_KEY"), latitude, longitude, b2i(isNoSmoking))
+    log.Printf("Start GET %s", gnabiEndpoint)
+    log.Printf("Params latitude=%f, longitude=%f, no_smoking=%d", latitude, longitude, b2i(isNoSmoking))
     res, err := client.Get(url)
     if err != nil {
         log.Fatal(err)
