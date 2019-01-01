@@ -91,11 +91,11 @@ func getRestaurants(latitude float64, longitude float64, isNoSmoking bool) (repl
     }
 
     for _, rest := range gnavi.Restaurants {
-        reply += fmt.Sprintf("%s\n", rest.Url)
+        reply += fmt.Sprintf("%s\n%s\n\n", rest.Name, rest.Url)
     }
 
     if len(gnavi.Restaurants) == 0 {
-        reply = fmt.Sprintf("%s\n", noContentMessage)
+        reply = fmt.Sprintf("%s\n\n", noContentMessage)
     }
 
     return reply + gnaviCreditText
