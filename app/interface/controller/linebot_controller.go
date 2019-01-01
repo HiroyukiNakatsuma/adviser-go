@@ -1,6 +1,7 @@
 package controller
 
 import (
+    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/external"
     "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/service"
 
     "github.com/line/line-bot-sdk-go/linebot"
@@ -12,7 +13,8 @@ func Reply(event *linebot.Event, profile *linebot.UserProfileResponse) (replyCon
         case *linebot.TextMessage:
             replyContent = service.ReplyContent4PlaneMessage(message.Text, profile.DisplayName)
         case *linebot.LocationMessage:
-            replyContent = service.ReplyContent4Location(message.Latitude, message.Longitude)
+            restServ := service.NewRestaurantService(external.NewGnavi())
+            replyContent = restServ.ReplyContent4Location(message.Latitude, message.Longitude)
         }
     }
 
