@@ -3,7 +3,7 @@ package service
 import (
     "fmt"
 
-    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/repository"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/external_service"
     "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"
 )
 
@@ -11,15 +11,15 @@ const noContentMessage = "ごめんなさい。該当するコンテンツがあ
 const gnaviCreditText = "Supported by ぐるなびWebService : https://api.gnavi.co.jp/api/scope/"
 
 type restaurantService struct {
-    restRepo repository.RestaurantRepository
+    restExServ external_service.RestaurantExternalService
 }
 
-func NewRestaurantService(restRepo repository.RestaurantRepository) *restaurantService {
+func NewRestaurantService(restRepo external_service.RestaurantExternalService) *restaurantService {
     return &restaurantService{restRepo}
 }
 
 func (restServ *restaurantService) GetRestaurants(latitude float64, longitude float64, isNoSmoking bool) []*model.Restaurant {
-    return restServ.restRepo.GetRestaurants(latitude, longitude, isNoSmoking)
+    return restServ.restExServ.GetRestaurants(latitude, longitude, isNoSmoking)
 }
 
 func (restServ *restaurantService) getRestaurants(latitude float64, longitude float64, isNoSmoking bool) (reply string) {

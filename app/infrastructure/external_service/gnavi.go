@@ -1,4 +1,4 @@
-package external
+package external_service
 
 import (
     "net/http"
@@ -9,7 +9,7 @@ import (
     "encoding/json"
 
     "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"
-    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/repository"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/external_service"
 )
 
 const gnabiEndpoint = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
@@ -41,7 +41,7 @@ type GnaviRest struct {
 
 type gnavi struct{}
 
-func NewGnavi() repository.RestaurantRepository {
+func NewGnavi() external_service.RestaurantExternalService {
     return &gnavi{}
 }
 
