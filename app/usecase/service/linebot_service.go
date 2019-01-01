@@ -14,6 +14,7 @@ import (
 const firstGreetingMessage = "さん、よろしくお願いします"
 const noContentMessage = "ごめんなさい。該当するコンテンツがありませんでした。。"
 const gnabiEndpoint = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
+const gnaviHitPerPage = 5
 const gnaviCreditText = "Supported by ぐるなびWebService : https://api.gnavi.co.jp/api/scope/"
 
 type GnaviRestSearchResponse struct {
@@ -74,7 +75,7 @@ func ReplyContent4PlaneMessage(inputMes string, userName string) (reply string) 
 
 func getRestaurants(latitude float64, longitude float64, isNoSmoking bool) (reply string) {
     var client = &http.Client{Timeout: 10 * time.Second}
-    url := gnabiEndpoint + fmt.Sprintf("?keyid=%s&latitude=%f&longitude=%f&no_smoking=%d", os.Getenv("GNAVI_ACCESS_KEY"), latitude, longitude, b2i(isNoSmoking))
+    url := gnabiEndpoint + fmt.Sprintf("?keyid=%s&latitude=%f&longitude=%f&no_smoking=%d&hit_per_page=%d", os.Getenv("GNAVI_ACCESS_KEY"), latitude, longitude, b2i(isNoSmoking), gnaviHitPerPage)
     log.Printf("Start GET %s", gnabiEndpoint)
     log.Printf("Params latitude=%f, longitude=%f, no_smoking=%d", latitude, longitude, b2i(isNoSmoking))
     res, err := client.Get(url)
