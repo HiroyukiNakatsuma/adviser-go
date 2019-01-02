@@ -9,13 +9,13 @@ import (
 const noContentMessage = "ごめんなさい。該当するコンテンツがありませんでした。。"
 const gnaviCreditText = "Supported by ぐるなびWebService : https://api.gnavi.co.jp/api/scope/"
 
-type linebotPresenter struct{}
+type restaurantPresenter struct{}
 
-func NewLinebotPresenter() presenter.RestaurantPresenter {
-    return &linebotPresenter{}
+func NewRestaurantPresenter() presenter.RestaurantPresenter {
+    return &restaurantPresenter{}
 }
 
-func (linebotPresenter *linebotPresenter) BuildReplyContent(rests []*model.Restaurant) (reply string) {
+func (restaurantPresenter *restaurantPresenter) BuildReplyContent(rests []*model.Restaurant) (reply string) {
     if len(rests) == 0 {
         return fmt.Sprintf("%s\n\n%s", noContentMessage, gnaviCreditText)
     }

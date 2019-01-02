@@ -14,7 +14,7 @@ func Reply(event *linebot.Event, profile *linebot.UserProfileResponse) (replyCon
         case *linebot.TextMessage:
             replyContent = service.ReplyContent4PlaneMessage(message.Text, profile.DisplayName)
         case *linebot.LocationMessage:
-            restServ := service.NewRestaurantService(external_service.NewGnavi(), presenter.NewLinebotPresenter())
+            restServ := service.NewRestaurantService(external_service.NewGnavi(), presenter.NewRestaurantPresenter())
             replyContent = restServ.ReplyContent4Location(message.Latitude, message.Longitude)
         }
     }
