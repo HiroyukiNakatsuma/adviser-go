@@ -8,13 +8,13 @@ import (
     "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/api/handler"
 )
 
-func Run() {
+func Run(appHandler handler.AppHandler) {
     port := os.Getenv("PORT")
     if port == "" {
         log.Fatal("PORT must be set")
     }
 
-    http.HandleFunc("/linebot/message", handler.LinebotHandler)
-    http.HandleFunc("/", handler.HelloHandler)
+    http.HandleFunc("/linebot/message", appHandler.LinebotHandler.Handle)
+    http.HandleFunc("/", appHandler.HelloHandler.Handle)
     http.ListenAndServe(":"+port, nil)
 }
