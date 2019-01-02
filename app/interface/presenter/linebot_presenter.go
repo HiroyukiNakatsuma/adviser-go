@@ -16,13 +16,12 @@ func NewLinebotPresenter() presenter.RestaurantPresenter {
 }
 
 func (linebotPresenter *linebotPresenter) BuildReplyContent(rests []*model.Restaurant) (reply string) {
+    if len(rests) == 0 {
+        return fmt.Sprintf("%s\n\n%s", noContentMessage, gnaviCreditText)
+    }
+
     for _, rest := range rests {
         reply += fmt.Sprintf("%s\n%s\n\n", rest.Name, rest.Url)
     }
-
-    if len(rests) == 0 {
-        reply = fmt.Sprintf("%s\n\n", noContentMessage)
-    }
-
     return reply + gnaviCreditText
 }
