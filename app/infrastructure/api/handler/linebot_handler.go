@@ -10,7 +10,15 @@ import (
     "github.com/line/line-bot-sdk-go/linebot"
 )
 
-func getClient() (bot *linebot.Client) {
+type LinebotHandler struct {
+    linebotCtr controller.LinebotController
+}
+
+func NewLinebotHandler(linebotCtr controller.LinebotController) *LinebotHandler {
+    return &LinebotHandler{linebotCtr}
+}
+
+func (linebotHandler *LinebotHandler) getClient() (bot *linebot.Client) {
     bot, err := linebot.New(
         os.Getenv("CHANNEL_SECRET_ADVISER"),
         os.Getenv("CHANNEL_TOKEN_ADVISER"),
@@ -21,8 +29,8 @@ func getClient() (bot *linebot.Client) {
     return
 }
 
-func getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse) {
-    bot := getClient()
+func (linebotHandler *LinebotHandler) getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse) {
+    bot := linebotHandler.getClient()
     var err error
     if len(src.GroupID) != 0 {
         res, err = bot.GetGroupMemberProfile(src.GroupID, src.UserID).Do()
@@ -38,10 +46,10 @@ func getUserProfile(src *linebot.EventSource) (res *linebot.UserProfileResponse)
     return
 }
 
-func LinebotHandler(w http.ResponseWriter, r *http.Request) {
+func (linebotHandler *LinebotHandler) Handle(w http.ResponseWriter, r *http.Request) {
     log.Printf("Start \"/%s\"", r.URL.Path[1:])
 
-    bot := getClient()
+    bot := linebotHandler.getClient()
     events, err := bot.ParseRequest(r)
     if err != nil {
         if err == linebot.ErrInvalidSignature {
@@ -54,8 +62,8 @@ func LinebotHandler(w http.ResponseWriter, r *http.Request) {
 
     var replyContent string
     for _, event := range events {
-        profile := getUserProfile(event.Source)
-        replyContent = controller.Reply(event, profile)
+        profile := linebotHandler.getUserProfile(event.Source)
+        replyContent = linebotHandler.linebotCtr.Reply(event, profile)
 
         if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyContent)).Do(); err != nil {
             log.Print(err)

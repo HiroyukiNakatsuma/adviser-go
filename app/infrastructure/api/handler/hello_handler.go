@@ -6,7 +6,13 @@ import (
     "fmt"
 )
 
-func HelloHandler(w http.ResponseWriter, r *http.Request) {
+type HelloHandler struct{}
+
+func NewHelloHandler() *HelloHandler {
+    return &HelloHandler{}
+}
+
+func (helloHandler *HelloHandler) Handle(w http.ResponseWriter, r *http.Request) {
     if r.URL.Path != "/" {
         http.NotFound(w, r)
         return

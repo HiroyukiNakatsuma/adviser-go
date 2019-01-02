@@ -6,32 +6,32 @@ import (
     "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"
 )
 
-type restaurantService struct {
+type RestaurantService struct {
     restExServ external_service.RestaurantExternalService
     restPres   presenter.RestaurantPresenter
 }
 
-func NewRestaurantService(restExServ external_service.RestaurantExternalService, restPres presenter.RestaurantPresenter) *restaurantService {
-    return &restaurantService{restExServ, restPres}
+func NewRestaurantService(restExServ external_service.RestaurantExternalService, restPres presenter.RestaurantPresenter) *RestaurantService {
+    return &RestaurantService{restExServ, restPres}
 }
 
-func (restServ *restaurantService) GetRestaurants(latitude float64, longitude float64, isNoSmoking bool) []*model.Restaurant {
+func (restServ *RestaurantService) GetRestaurants(latitude float64, longitude float64, isNoSmoking bool) []*model.Restaurant {
     return restServ.restExServ.GetRestaurants(latitude, longitude, isNoSmoking)
 }
 
-func (restServ *restaurantService) BuildReplyContent(rests []*model.Restaurant) string {
+func (restServ *RestaurantService) BuildReplyContent(rests []*model.Restaurant) string {
     return restServ.restPres.BuildReplyContent(rests)
 }
 
-func (restServ *restaurantService) getRestaurants(latitude float64, longitude float64, isNoSmoking bool) string {
+func (restServ *RestaurantService) getRestaurants(latitude float64, longitude float64, isNoSmoking bool) string {
     restaurants := restServ.GetRestaurants(latitude, longitude, isNoSmoking)
     return restServ.BuildReplyContent(restaurants)
 }
 
-func (restServ *restaurantService) getNoSmokingRestaurants(latitude float64, longitude float64) string {
+func (restServ *RestaurantService) getNoSmokingRestaurants(latitude float64, longitude float64) string {
     return restServ.getRestaurants(latitude, longitude, true)
 }
 
-func (restServ *restaurantService) ReplyContent4Location(latitude float64, longitude float64) string {
+func (restServ *RestaurantService) ReplyContent4Location(latitude float64, longitude float64) string {
     return restServ.getNoSmokingRestaurants(latitude, longitude)
 }
