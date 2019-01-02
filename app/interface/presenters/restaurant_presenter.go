@@ -1,4 +1,4 @@
-package presenter
+package presenters
 
 import (
     "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"

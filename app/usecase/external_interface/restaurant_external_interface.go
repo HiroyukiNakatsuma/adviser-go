@@ -1,4 +1,4 @@
-package external_service
+package external_interface
 
 import "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"
 

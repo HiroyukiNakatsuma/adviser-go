@@ -1,17 +1,17 @@
 package service
 
 import (
-    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/external_service"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/external_interface"
     "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/presenter"
     "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"
 )
 
 type RestaurantService struct {
-    restExServ external_service.RestaurantExternalService
+    restExServ external_interface.RestaurantExternalService
     restPres   presenter.RestaurantPresenter
 }
 
-func NewRestaurantService(restExServ external_service.RestaurantExternalService, restPres presenter.RestaurantPresenter) *RestaurantService {
+func NewRestaurantService(restExServ external_interface.RestaurantExternalService, restPres presenter.RestaurantPresenter) *RestaurantService {
     return &RestaurantService{restExServ, restPres}
 }
 
