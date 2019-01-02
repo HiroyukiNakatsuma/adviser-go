@@ -11,8 +11,8 @@ type restaurantService struct {
     restPres   presenter.RestaurantPresenter
 }
 
-func NewRestaurantService(restRepo external_service.RestaurantExternalService, restPres presenter.RestaurantPresenter) *restaurantService {
-    return &restaurantService{restRepo, restPres}
+func NewRestaurantService(restExServ external_service.RestaurantExternalService, restPres presenter.RestaurantPresenter) *restaurantService {
+    return &restaurantService{restExServ, restPres}
 }
 
 func (restServ *restaurantService) GetRestaurants(latitude float64, longitude float64, isNoSmoking bool) []*model.Restaurant {

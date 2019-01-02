@@ -12,7 +12,8 @@ func Reply(event *linebot.Event, profile *linebot.UserProfileResponse) (replyCon
     if event.Type == linebot.EventTypeMessage {
         switch message := event.Message.(type) {
         case *linebot.TextMessage:
-            replyContent = service.ReplyContent4PlaneMessage(message.Text, profile.DisplayName)
+            txtServ := service.NewTextService(presenter.NewTextPresenter())
+            replyContent = txtServ.ReplyContent4PlaneMessage(message.Text, profile.DisplayName)
         case *linebot.LocationMessage:
             restServ := service.NewRestaurantService(external_service.NewGnavi(), presenter.NewRestaurantPresenter())
             replyContent = restServ.ReplyContent4Location(message.Latitude, message.Longitude)
