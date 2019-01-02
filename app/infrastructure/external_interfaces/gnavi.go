@@ -41,7 +41,7 @@ type GnaviRest struct {
 
 type gnavi struct{}
 
-func NewGnavi() external_interface.RestaurantExternalService {
+func NewGnavi() external_interface.RestaurantExternalInterface {
     return &gnavi{}
 }
 

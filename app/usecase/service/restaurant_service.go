@@ -7,11 +7,11 @@ import (
 )
 
 type RestaurantService struct {
-    restExServ external_interface.RestaurantExternalService
+    restExServ external_interface.RestaurantExternalInterface
     restPres   presenter.RestaurantPresenter
 }
 
-func NewRestaurantService(restExServ external_interface.RestaurantExternalService, restPres presenter.RestaurantPresenter) *RestaurantService {
+func NewRestaurantService(restExServ external_interface.RestaurantExternalInterface, restPres presenter.RestaurantPresenter) *RestaurantService {
     return &RestaurantService{restExServ, restPres}
 }
 
