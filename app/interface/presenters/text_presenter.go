@@ -9,6 +9,8 @@ import (
 
 const firstGreetingMessage = "さん、よろしくお願いします"
 
+var emojiList = [8]string{"(^^)", "(^_^)", "(^-^)", "(*^^*)", "(^ ^)", "(^.^)", "(≧▽≦)", "！！"}
+
 type textPresenter struct{}
 
 func NewTextPresenter() presenter.TextPresenter {
@@ -16,7 +18,6 @@ func NewTextPresenter() presenter.TextPresenter {
 }
 
 func (textPresenter *textPresenter) BuildFirstGreeting(userName string) string {
-    var emojiList = [8]string{"(^^)", "(^_^)", "(^-^)", "(*^^*)", "(^ ^)", "(^.^)", "(≧▽≦)", "！！"}
     rand.Seed(time.Now().UnixNano())
     return userName + firstGreetingMessage + emojiList[rand.Intn(8)]
 }
