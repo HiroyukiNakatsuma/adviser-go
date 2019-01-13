@@ -5,7 +5,7 @@ import (
     "log"
     "net/http"
 
-    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/api/handler"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/http/handler"
 )
 
 func Run(appHandler handler.AppHandler) {
