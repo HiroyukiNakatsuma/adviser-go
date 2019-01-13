@@ -1,7 +1,7 @@
 package main
 
 import (
-    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/api/router"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/http/router"
     "github.com/HiroyukiNakatsuma/adviser-go/app/registry"
 )
 
