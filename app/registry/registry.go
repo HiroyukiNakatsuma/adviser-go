@@ -2,7 +2,7 @@ package registry
 
 import (
     "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/api/handler"
-    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/external_interfaces"
+    "github.com/HiroyukiNakatsuma/adviser-go/app/infrastructure/api/external_interfaces"
     "github.com/HiroyukiNakatsuma/adviser-go/app/interface/controller"
     "github.com/HiroyukiNakatsuma/adviser-go/app/interface/presenters"
     "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/external_interface"
