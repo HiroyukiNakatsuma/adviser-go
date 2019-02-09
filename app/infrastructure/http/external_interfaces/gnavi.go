@@ -13,7 +13,7 @@ import (
 )
 
 const gnabiEndpoint = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
-const gnaviHitPerPage = 5
+const gnaviHitPerPage = 3
 
 type GnaviRestSearchResponse struct {
     Errors        []GnaviError `json:"error"`
