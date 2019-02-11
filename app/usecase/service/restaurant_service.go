@@ -18,16 +18,12 @@ func NewRestaurantService(restExServ external_interface.RestaurantExternalInterf
     return &RestaurantService{restExServ, restPres}
 }
 
-func (restServ *RestaurantService) GetRestaurants(latitude float64, longitude float64, isLunch bool, isNoSmoking bool) []*model.Restaurant {
-    return restServ.restExServ.GetRestaurants(latitude, longitude, isLunch, isNoSmoking)
-}
-
 func (restServ *RestaurantService) BuildReplyContent(rests []*model.Restaurant) string {
     return restServ.restPres.BuildReplyContent(rests)
 }
 
 func (restServ *RestaurantService) getRestaurants(latitude float64, longitude float64, isLunch bool, isNoSmoking bool) string {
-    restaurants := restServ.GetRestaurants(latitude, longitude, isLunch, isNoSmoking)
+    restaurants := restServ.restExServ.GetRestaurants(latitude, longitude, isLunch, isNoSmoking)
     return restServ.BuildReplyContent(restaurants)
 }
 
