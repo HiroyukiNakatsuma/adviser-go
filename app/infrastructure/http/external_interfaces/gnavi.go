@@ -29,14 +29,19 @@ type GnaviError struct {
 }
 
 type GnaviRest struct {
-    Id         string `json:"id"`
-    UpdateDate string `json:"update_date"`
-    Name       string `json:"name"`
-    NameKana   string `json:"name_kana"`
-    Latitude   string `json:"latitude"`
-    Longitude  string `json:"longitude"`
-    Category   string `json:"category"`
-    Url        string `json:"url"`
+    Id         string    `json:"id"`
+    UpdateDate string    `json:"update_date"`
+    Name       string    `json:"name"`
+    NameKana   string    `json:"name_kana"`
+    Latitude   string    `json:"latitude"`
+    Longitude  string    `json:"longitude"`
+    Category   string    `json:"category"`
+    Url        string    `json:"url"`
+    GnaviCodes GnaviCode `json:"code"`
+}
+
+type GnaviCode struct {
+    CategoryCodeSmalls []string `json:"category_code_s"`
 }
 
 type gnavi struct{}
@@ -63,11 +68,34 @@ func (gnavi *gnavi) GetRestaurants(latitude float64, longitude float64, isLunch 
     }
 
     for _, rest := range gnaviRestSearchResponse.Restaurants {
-        restaurant := model.Restaurant(rest)
+        if isLunch && gnavi.isNotLunchCategory(rest.GnaviCodes.CategoryCodeSmalls) {
+            continue
+        }
+
+        restaurant := model.Restaurant{rest.Id, rest.Name, rest.NameKana, rest.Latitude, rest.Longitude, rest.Category, rest.UpdateDate, rest.UpdateDate}
         restaurants = append(restaurants, &restaurant)
     }
 
     return
+}
+
+func (gnavi *gnavi) isNotLunchCategory(gnaviCategoryCodeSmalls []string) bool {
+    notLunchCategorySmalls := []string{"RSFST01013", "RSFST10012", "RSFST10013", "RSFST19001", "RSFST19004", "RSFST19005", "RSFST19006", "RSFST19007", "RSFST19008", "RSFST19009", "RSFST19010", "RSFST19011", "RSFST20001", "RSFST20002", "RSFST20003"}
+    for _, notLunchCategorySmall := range notLunchCategorySmalls {
+        if contains(gnaviCategoryCodeSmalls, notLunchCategorySmall) {
+            return true
+        }
+    }
+    return false
+}
+
+func contains(s []string, e string) bool {
+    for _, v := range s {
+        if e == v {
+            return true
+        }
+    }
+    return false
 }
 
 func b2i(b bool) int8 {
