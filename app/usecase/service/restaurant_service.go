@@ -22,11 +22,11 @@ func (restServ *RestaurantService) BuildReplyContent(rests []*model.Restaurant) 
     return restServ.restPres.BuildReplyContent(rests)
 }
 
+func (restServ *RestaurantService) ReplyContentByLocation(latitude float64, longitude float64) string {
+    return restServ.getRestaurants(latitude, longitude, isLunch, isNoSmoking)
+}
+
 func (restServ *RestaurantService) getRestaurants(latitude float64, longitude float64, isLunch bool, isNoSmoking bool) string {
     restaurants := restServ.restExServ.GetRestaurants(latitude, longitude, isLunch, isNoSmoking)
     return restServ.BuildReplyContent(restaurants)
-}
-
-func (restServ *RestaurantService) ReplyContent4Location(latitude float64, longitude float64) string {
-    return restServ.getRestaurants(latitude, longitude, isLunch, isNoSmoking)
 }
