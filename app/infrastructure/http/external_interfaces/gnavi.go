@@ -13,7 +13,6 @@ import (
 )
 
 const gnabiEndpoint = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
-const gnaviHitPerPage = 3
 
 type GnaviRestSearchResponse struct {
     Errors        []GnaviError `json:"error"`
@@ -50,9 +49,9 @@ func NewGnavi() external_interface.RestaurantExternalInterface {
     return &gnavi{}
 }
 
-func (gnavi *gnavi) GetRestaurants(latitude float64, longitude float64, isLunch bool, isNoSmoking bool) (restaurants []*model.Restaurant) {
+func (gnavi *gnavi) GetRestaurants(latitude float64, longitude float64, isLunch bool, isNoSmoking bool, amount int) (restaurants []*model.Restaurant) {
     var client = &http.Client{Timeout: 10 * time.Second}
-    url := gnabiEndpoint + fmt.Sprintf("?keyid=%s&latitude=%f&longitude=%f&no_smoking=%d&lunch=%d&hit_per_page=%d", os.Getenv("GNAVI_ACCESS_KEY"), latitude, longitude, b2i(isLunch), b2i(isNoSmoking), gnaviHitPerPage)
+    url := gnabiEndpoint + fmt.Sprintf("?keyid=%s&latitude=%f&longitude=%f&no_smoking=%d&lunch=%d&hit_per_page=%d", os.Getenv("GNAVI_ACCESS_KEY"), latitude, longitude, b2i(isLunch), b2i(isNoSmoking), amount)
     log.Printf("Start GET %s", gnabiEndpoint)
     log.Printf("Params latitude=%f, longitude=%f, no_smoking=%d", latitude, longitude, b2i(isNoSmoking))
     res, err := client.Get(url)

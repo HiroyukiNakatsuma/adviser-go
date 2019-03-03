@@ -8,6 +8,7 @@ import (
 
 const isLunch = true
 const isNoSmoking = true
+const restaurantSearchAmount = 20
 
 type RestaurantService struct {
     restExServ external_interface.RestaurantExternalInterface
@@ -23,10 +24,10 @@ func (restServ *RestaurantService) BuildReplyContent(rests []*model.Restaurant) 
 }
 
 func (restServ *RestaurantService) ReplyContentByLocation(latitude float64, longitude float64) string {
-    return restServ.getRestaurants(latitude, longitude, isLunch, isNoSmoking)
+    return restServ.getRestaurants(latitude, longitude, isLunch, isNoSmoking, restaurantSearchAmount)
 }
 
-func (restServ *RestaurantService) getRestaurants(latitude float64, longitude float64, isLunch bool, isNoSmoking bool) string {
-    restaurants := restServ.restExServ.GetRestaurants(latitude, longitude, isLunch, isNoSmoking)
+func (restServ *RestaurantService) getRestaurants(latitude float64, longitude float64, isLunch bool, isNoSmoking bool, amount int) string {
+    restaurants := restServ.restExServ.GetRestaurants(latitude, longitude, isLunch, isNoSmoking, amount)
     return restServ.BuildReplyContent(restaurants)
 }
