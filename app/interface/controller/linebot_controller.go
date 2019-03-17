@@ -21,7 +21,7 @@ func (linebotController *LinebotController) Reply(event *linebot.Event, profile 
         case *linebot.TextMessage:
             replyContent = linebotController.txtServ.ReplyContent4PlaneMessage(message.Text, profile.DisplayName)
         case *linebot.LocationMessage:
-            replyContent = linebotController.restServ.ReplyContent4Location(message.Latitude, message.Longitude)
+            replyContent = linebotController.restServ.ReplyContentByLocation(message.Latitude, message.Longitude)
         }
     }
 
