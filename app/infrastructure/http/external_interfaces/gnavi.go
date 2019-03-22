@@ -71,7 +71,7 @@ func (gnavi *gnavi) GetRestaurants(latitude float64, longitude float64, isLunch 
             continue
         }
 
-        restaurant := model.Restaurant{rest.Id, rest.Name, rest.NameKana, rest.Latitude, rest.Longitude, rest.Category, rest.UpdateDate, rest.UpdateDate}
+        restaurant := model.Restaurant{rest.Id, rest.Name, rest.NameKana, rest.Latitude, rest.Longitude, rest.Category, rest.Url, rest.UpdateDate}
         restaurants = append(restaurants, &restaurant)
     }
 
