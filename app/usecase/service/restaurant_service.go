@@ -21,10 +21,6 @@ func NewRestaurantService(restExServ external_interface.RestaurantExternalInterf
     return &RestaurantService{restExServ, restPres}
 }
 
-func (restServ *RestaurantService) BuildReplyContent(rests []*model.Restaurant) string {
-    return restServ.restPres.BuildReplyContent(rests)
-}
-
 func (restServ *RestaurantService) ReplyContentByLocation(latitude float64, longitude float64) string {
     return restServ.getRestaurants(latitude, longitude, isLunch, isNoSmoking, restaurantSearchAmount)
 }
@@ -34,7 +30,7 @@ func (restServ *RestaurantService) getRestaurants(latitude float64, longitude fl
     if len(rests) > 3 {
         rests = restServ.extractThreeRandomly(rests)
     }
-    return restServ.BuildReplyContent(rests)
+    return restServ.restPres.BuildReplyContent(rests)
 }
 
 func (restServ *RestaurantService) extractThreeRandomly(rests []*model.Restaurant) []*model.Restaurant {
