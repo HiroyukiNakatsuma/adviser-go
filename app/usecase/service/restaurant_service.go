@@ -5,6 +5,7 @@ import (
     "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/presenter"
     "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"
     "math/rand"
+    "time"
 )
 
 const isLunch = true
@@ -48,6 +49,7 @@ refs: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 func shuffle(data []*model.Restaurant) {
     n := len(data)
     for i := n - 1; i >= 0; i-- {
+        rand.Seed(time.Now().UnixNano())
         j := rand.Intn(i + 1)
         data[i], data[j] = data[j], data[i]
     }
