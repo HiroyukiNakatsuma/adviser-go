@@ -9,7 +9,7 @@ import (
 
 const isLunch = true
 const isNoSmoking = true
-const restaurantSearchAmount = 20
+const restaurantSearchAmount = 30
 
 type RestaurantService struct {
     restExServ external_interface.RestaurantExternalInterface
