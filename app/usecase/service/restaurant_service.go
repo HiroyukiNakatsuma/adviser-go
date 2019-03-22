@@ -38,7 +38,7 @@ func (restServ *RestaurantService) getRestaurants(latitude float64, longitude fl
 
 func (restServ *RestaurantService) extractThreeRandomly(rests []*model.Restaurant) []*model.Restaurant {
     shuffle(rests)
-    return rests[:2]
+    return rests[:3]
 }
 
 /**
