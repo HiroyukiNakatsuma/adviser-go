@@ -29,8 +29,10 @@ func (restServ *RestaurantService) ReplyContentByLocation(latitude float64, long
 }
 
 func (restServ *RestaurantService) getRestaurants(latitude float64, longitude float64, isLunch bool, isNoSmoking bool, amount int) string {
-    externalRestaurants := restServ.restExServ.GetRestaurants(latitude, longitude, isLunch, isNoSmoking, amount)
-    rests := restServ.extractThreeRandomly(externalRestaurants)
+    rests := restServ.restExServ.GetRestaurants(latitude, longitude, isLunch, isNoSmoking, amount)
+    if len(rests) > 3 {
+        rests = restServ.extractThreeRandomly(rests)
+    }
     return restServ.BuildReplyContent(rests)
 }
 
