@@ -60,12 +60,9 @@ func (linebotHandler *LinebotHandler) Handle(w http.ResponseWriter, r *http.Requ
         return
     }
 
-    var replyContent string
     for _, event := range events {
         profile := linebotHandler.getUserProfile(event.Source)
-        replyContent = linebotHandler.linebotCtr.Reply(event, profile)
-
-        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyContent)).Do(); err != nil {
+        if _, err = bot.ReplyMessage(event.ReplyToken, linebotHandler.linebotCtr.Reply(event, profile)).Do(); err != nil {
             log.Print(err)
         }
     }

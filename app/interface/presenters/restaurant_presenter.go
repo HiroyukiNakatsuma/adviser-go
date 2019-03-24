@@ -2,26 +2,33 @@ package presenters
 
 import (
     "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"
-    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/presenter"
-    "fmt"
+
+    "github.com/line/line-bot-sdk-go/linebot"
 )
 
-const noContentMessage = "ごめんなさい。該当するコンテンツがありませんでした。。"
+const noContentMessage = "ごめんなさい。該当するレストランがありませんでした。。"
 const gnaviCreditText = "Supported by ぐるなびWebService : https://api.gnavi.co.jp/api/scope/"
+const altText = "This is restaurant list."
+const detailLabel = "詳細"
 
-type restaurantPresenter struct{}
+type RestaurantPresenter struct{}
 
-func NewRestaurantPresenter() presenter.RestaurantPresenter {
-    return &restaurantPresenter{}
+func NewRestaurantPresenter() *RestaurantPresenter {
+    return &RestaurantPresenter{}
 }
 
-func (restaurantPresenter *restaurantPresenter) BuildReplyContent(rests []*model.Restaurant) (reply string) {
+func (restaurantPresenter *RestaurantPresenter) BuildReplyContent(rests []*model.Restaurant) (reply linebot.SendingMessage) {
     if len(rests) == 0 {
-        return fmt.Sprintf("%s\n\n%s", noContentMessage, gnaviCreditText)
+        return linebot.NewTextMessage(noContentMessage)
     }
 
+    var columns []*linebot.CarouselColumn
     for _, rest := range rests {
-        reply += fmt.Sprintf("%s\n%s\n\n", rest.Name, rest.Url)
+        actions := linebot.NewURIAction(detailLabel, rest.Url)
+        columns = append(columns, linebot.NewCarouselColumn(rest.ImageUrl, rest.Name, gnaviCreditText, actions))
     }
-    return reply + gnaviCreditText
+
+    template := linebot.NewCarouselTemplate(columns...)
+
+    return linebot.NewTemplateMessage(altText, template)
 }

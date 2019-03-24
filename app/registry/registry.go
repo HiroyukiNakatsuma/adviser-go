@@ -35,7 +35,7 @@ func NewTextService() *service.TextService {
 }
 
 func NewRestaurantService() *service.RestaurantService {
-    return service.NewRestaurantService(NewGnavi(), NewRestaurantPresenter())
+    return service.NewRestaurantService(NewGnavi())
 }
 
 func NewTextPresenter() presenter.TextPresenter {
@@ -44,8 +44,4 @@ func NewTextPresenter() presenter.TextPresenter {
 
 func NewGnavi() external_interface.RestaurantExternalInterface {
     return external_interfaces.NewGnavi()
-}
-
-func NewRestaurantPresenter() presenter.RestaurantPresenter {
-    return presenters.NewRestaurantPresenter()
 }
