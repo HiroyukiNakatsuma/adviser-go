@@ -60,15 +60,12 @@ func (linebotHandler *LinebotHandler) Handle(w http.ResponseWriter, r *http.Requ
         return
     }
 
-    // var replyContent string
+    var replyContent string
     for _, event := range events {
-        // profile := linebotHandler.getUserProfile(event.Source)
-        // replyContent = linebotHandler.linebotCtr.Reply(event, profile)
-        actions := linebot.NewURIAction("test label", "https://adviser-go.herokuapp.com/")
-        columns := linebot.NewCarouselColumn("https://shielded-tor-45730.herokuapp.com/images/give_up_240_240.jpg", "Test", "test message.", actions)
-        template := linebot.NewCarouselTemplate(columns)
+        profile := linebotHandler.getUserProfile(event.Source)
+        replyContent = linebotHandler.linebotCtr.Reply(event, profile)
 
-        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTemplateMessage("test template message.", template)).Do(); err != nil {
+        if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyContent)).Do(); err != nil {
             log.Print(err)
         }
     }
