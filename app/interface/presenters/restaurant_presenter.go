@@ -7,9 +7,9 @@ import (
 )
 
 const noContentMessage = "ごめんなさい。該当するレストランがありませんでした。。"
-const gnaviCreditText = "Supported by ぐるなびWebService : https://api.gnavi.co.jp/api/scope/"
+const gnaviCreditText = "Supported by ぐるなびWebService"
 const altText = "This is restaurant list."
-const detailLabel = "詳細"
+const detailLabel = "詳細を見る"
 
 type RestaurantPresenter struct{}
 
@@ -28,7 +28,5 @@ func (restaurantPresenter *RestaurantPresenter) BuildReplyContent(rests []*model
         columns = append(columns, linebot.NewCarouselColumn(rest.ImageUrl, rest.Name, gnaviCreditText, actions))
     }
 
-    template := linebot.NewCarouselTemplate(columns...)
-
-    return linebot.NewTemplateMessage(altText, template)
+    return linebot.NewTemplateMessage(altText, linebot.NewCarouselTemplate(columns...))
 }
