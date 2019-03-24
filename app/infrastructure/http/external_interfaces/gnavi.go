@@ -28,15 +28,20 @@ type GnaviError struct {
 }
 
 type GnaviRest struct {
-    Id         string    `json:"id"`
-    UpdateDate string    `json:"update_date"`
-    Name       string    `json:"name"`
-    NameKana   string    `json:"name_kana"`
-    Latitude   string    `json:"latitude"`
-    Longitude  string    `json:"longitude"`
-    Category   string    `json:"category"`
-    Url        string    `json:"url"`
-    GnaviCodes GnaviCode `json:"code"`
+    Id         string        `json:"id"`
+    UpdateDate string        `json:"update_date"`
+    Name       string        `json:"name"`
+    NameKana   string        `json:"name_kana"`
+    Latitude   string        `json:"latitude"`
+    Longitude  string        `json:"longitude"`
+    Category   string        `json:"category"`
+    Url        string        `json:"url"`
+    ImageUrl   GnaviImageUrl `json:"image_url"`
+    GnaviCodes GnaviCode     `json:"code"`
+}
+
+type GnaviImageUrl struct {
+    ShopImage1 string `json:"shop_image1"`
 }
 
 type GnaviCode struct {
@@ -71,7 +76,7 @@ func (gnavi *gnavi) GetRestaurants(latitude float64, longitude float64, isLunch 
             continue
         }
 
-        restaurant := model.Restaurant{rest.Id, rest.Name, rest.NameKana, rest.Latitude, rest.Longitude, rest.Category, rest.Url, rest.UpdateDate}
+        restaurant := model.Restaurant{rest.Id, rest.Name, rest.NameKana, rest.Latitude, rest.Longitude, rest.Category, rest.Url, rest.ImageUrl.ShopImage1, rest.UpdateDate}
         restaurants = append(restaurants, &restaurant)
     }
 
