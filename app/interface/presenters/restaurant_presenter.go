@@ -26,16 +26,17 @@ func (restaurantPresenter *RestaurantPresenter) BuildReplyContent(rests []*model
     var columns []*linebot.CarouselColumn
     for _, rest := range rests {
         actions := linebot.NewURIAction(detailLabel, rest.Url)
-        columns = append(columns, linebot.NewCarouselColumn(imageUrl(rest.ImageUrl), rest.Name, gnaviCreditText, actions))
+        columns = append(columns, linebot.NewCarouselColumn(restaurantPresenter.imageUrl(rest.ImageUrls), rest.Name, gnaviCreditText, actions))
     }
 
     return linebot.NewTemplateMessage(altText, linebot.NewCarouselTemplate(columns...))
 }
 
-func imageUrl(restaurantUrl string) string {
-    if restaurantUrl == "" {
-        return noImageUrl
-    } else {
-        return restaurantUrl
+func (restaurantPresenter *RestaurantPresenter) imageUrl(urls []string) string {
+    for _, url := range urls {
+        if url != "" {
+            return url
+        }
     }
+    return noImageUrl
 }

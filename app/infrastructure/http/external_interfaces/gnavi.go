@@ -42,6 +42,7 @@ type GnaviRest struct {
 
 type GnaviImageUrl struct {
     ShopImage1 string `json:"shop_image1"`
+    ShopImage2 string `json:"shop_image2"`
 }
 
 type GnaviCode struct {
@@ -76,7 +77,8 @@ func (gnavi *gnavi) GetRestaurants(latitude float64, longitude float64, isLunch 
             continue
         }
 
-        restaurant := model.Restaurant{rest.Id, rest.Name, rest.NameKana, rest.Latitude, rest.Longitude, rest.Category, rest.Url, rest.ImageUrl.ShopImage1, rest.UpdateDate}
+        imageUrls := []string{rest.ImageUrl.ShopImage1, rest.ImageUrl.ShopImage2}
+        restaurant := model.Restaurant{rest.Id, rest.Name, rest.NameKana, rest.Latitude, rest.Longitude, rest.Category, rest.Url, imageUrls, rest.UpdateDate}
         restaurants = append(restaurants, &restaurant)
     }
 
