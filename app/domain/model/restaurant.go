@@ -8,5 +8,6 @@ type Restaurant struct {
     Longitude  string
     Category   string
     Url        string
+    ImageUrls  []string
     UpdateDate string
 }

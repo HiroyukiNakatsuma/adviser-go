@@ -2,26 +2,41 @@ package presenters
 
 import (
     "github.com/HiroyukiNakatsuma/adviser-go/app/domain/model"
-    "github.com/HiroyukiNakatsuma/adviser-go/app/usecase/presenter"
-    "fmt"
+
+    "github.com/line/line-bot-sdk-go/linebot"
 )
 
-const noContentMessage = "ごめんなさい。該当するコンテンツがありませんでした。。"
-const gnaviCreditText = "Supported by ぐるなびWebService : https://api.gnavi.co.jp/api/scope/"
+const noContentMessage = "ごめんなさい。該当するレストランがありませんでした。。"
+const noImageUrl = "https://adviser-go.herokuapp.com/public/images/noImage.jpg"
+const gnaviCreditText = "Supported by ぐるなびWebService"
+const altText = "レストラン情報を送信しました"
+const detailLabel = "詳細を見る"
 
-type restaurantPresenter struct{}
+type RestaurantPresenter struct{}
 
-func NewRestaurantPresenter() presenter.RestaurantPresenter {
-    return &restaurantPresenter{}
+func NewRestaurantPresenter() *RestaurantPresenter {
+    return &RestaurantPresenter{}
 }
 
-func (restaurantPresenter *restaurantPresenter) BuildReplyContent(rests []*model.Restaurant) (reply string) {
+func (restaurantPresenter *RestaurantPresenter) BuildReplyContent(rests []*model.Restaurant) (reply linebot.SendingMessage) {
     if len(rests) == 0 {
-        return fmt.Sprintf("%s\n\n%s", noContentMessage, gnaviCreditText)
+        return linebot.NewTextMessage(noContentMessage)
     }
 
+    var columns []*linebot.CarouselColumn
     for _, rest := range rests {
-        reply += fmt.Sprintf("%s\n%s\n\n", rest.Name, rest.Url)
+        actions := linebot.NewURIAction(detailLabel, rest.Url)
+        columns = append(columns, linebot.NewCarouselColumn(restaurantPresenter.imageUrl(rest.ImageUrls), rest.Name, gnaviCreditText, actions))
     }
-    return reply + gnaviCreditText
+
+    return linebot.NewTemplateMessage(altText, linebot.NewCarouselTemplate(columns...))
+}
+
+func (restaurantPresenter *RestaurantPresenter) imageUrl(urls []string) string {
+    for _, url := range urls {
+        if url != "" {
+            return url
+        }
+    }
+    return noImageUrl
 }

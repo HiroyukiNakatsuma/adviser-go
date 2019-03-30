@@ -15,6 +15,7 @@ func Run(appHandler handler.AppHandler) {
     }
 
     http.HandleFunc("/linebot/message", appHandler.LinebotHandler.Handle)
+    http.Handle("/public/images/", appHandler.ImageHandler.Handle())
     http.HandleFunc("/", appHandler.HelloHandler.Handle)
     http.ListenAndServe(":"+port, nil)
 }
