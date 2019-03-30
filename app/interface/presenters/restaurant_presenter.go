@@ -7,7 +7,7 @@ import (
 )
 
 const noContentMessage = "ごめんなさい。該当するレストランがありませんでした。。"
-const noImageUrl = "https://shielded-tor-45730.herokuapp.com/images/give_up_240_240.jpg"
+const noImageUrl = "https://adviser-go.herokuapp.com/public/images/noImage.jpg"
 const gnaviCreditText = "Supported by ぐるなびWebService"
 const altText = "レストラン情報を送信しました"
 const detailLabel = "詳細を見る"

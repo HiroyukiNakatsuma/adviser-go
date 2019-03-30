@@ -15,7 +15,7 @@ func ResolveDependencies() *handler.AppHandler {
 }
 
 func NewAppHandler() *handler.AppHandler {
-    return handler.NewAppHandler(*NewLinebotHandler(), *NewHelloHandler())
+    return handler.NewAppHandler(*NewLinebotHandler(), *NewHelloHandler(), *NewImageHandler())
 }
 
 func NewLinebotHandler() *handler.LinebotHandler {
@@ -24,6 +24,10 @@ func NewLinebotHandler() *handler.LinebotHandler {
 
 func NewHelloHandler() *handler.HelloHandler {
     return handler.NewHelloHandler()
+}
+
+func NewImageHandler() *handler.ImageHandler {
+    return handler.NewImageHandler()
 }
 
 func NewLinebotController() *controller.LinebotController {
