@@ -8,7 +8,7 @@ import (
 
 const noContentMessage = "ごめんなさい。該当するレストランがありませんでした。。"
 const noImageUrl = "https://adviser-go.herokuapp.com/public/images/noImage.jpg"
-const gnaviCreditText = "Supported by ぐるなびWebService"
+const gnaviCreditText = "Supported by ぐるなびWebService : https://api.gnavi.co.jp/api/scope/"
 const altText = "レストラン情報を送信しました"
 const detailLabel = "詳細を見る"
 const imageComponentType = "image"
@@ -57,13 +57,13 @@ func newBody(name string) *linebot.BoxComponent {
         Layout:  "vertical",
         Spacing: "sm",
         Contents: []linebot.FlexComponent{
-            &linebot.TextComponent{Type: "text", Text: name, Weight: "bold", Size: "xl"},
+            &linebot.TextComponent{Type: "text", Text: name, Weight: "bold", Size: "lg"},
             &linebot.BoxComponent{
                 Type:    boxComponentType,
                 Layout:  "vertical",
                 Spacing: "sm",
                 Contents: []linebot.FlexComponent{
-                    &linebot.TextComponent{Type: "text", Text: gnaviCreditText, Wrap: true, Color: "#666666", Size: "sm"}}}}}
+                    &linebot.TextComponent{Type: "text", Text: gnaviCreditText, Wrap: true, Color: "#666666", Size: "xs"}}}}}
 }
 
 func newFooter(shopUrl string) *linebot.BoxComponent {
