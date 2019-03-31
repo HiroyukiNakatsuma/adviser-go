@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "+AFpii7IfZSiqfUIddwXuniOuoo=",
+			"checksumSHA1": "2KasQxBqUP6h3wLilhP9Xfn6An0=",
 			"path": "github.com/line/line-bot-sdk-go/linebot",
-			"revision": "f1e37ce560f186e87cc2c4ec0ffd9d7da814fccc",
-			"revisionTime": "2018-11-30T07:22:07Z"
+			"revision": "d3d8d1a384972b9d04a1ffa6769c59bd8a28b6a0",
+			"revisionTime": "2019-03-26T09:45:32Z"
 		}
 	],
 	"rootPath": "github.com/HiroyukiNakatsuma/adviser-go"
