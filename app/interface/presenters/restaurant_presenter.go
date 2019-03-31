@@ -74,6 +74,9 @@ func newDefinition(title string, desc string) *linebot.BoxComponent {
     titleFlex := int(1)
     descriptionFlex := int(5)
     return &linebot.BoxComponent{
+        Type:    boxComponentType,
+        Layout:  "baseline",
+        Spacing: "sm",
         Contents: []linebot.FlexComponent{
             &linebot.TextComponent{
                 Type:  textComponentType,
