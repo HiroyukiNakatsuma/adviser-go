@@ -71,8 +71,8 @@ func newBodyBlock(rest *model.Restaurant) *linebot.BoxComponent {
 }
 
 func newDefinition(title string, desc string) *linebot.BoxComponent {
-    var titleFlex = 1
-    var descriptionFlex = 5
+    var titleFlex = int(1)
+    var descriptionFlex = int(5)
     return &linebot.BoxComponent{
         Contents: []linebot.FlexComponent{
             &linebot.TextComponent{
