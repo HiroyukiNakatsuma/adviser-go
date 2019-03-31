@@ -34,7 +34,7 @@ func (restaurantPresenter *RestaurantPresenter) BuildReplyContent(rests []*model
     for _, rest := range rests {
         hero := newHero(restaurantPresenter.imageUrl(rest.ImageUrls), rest.Url)
         body := newBody(rest.Name)
-        footer := newFooter()
+        footer := newFooter(rest.Url)
         contents = append(contents, newBubbleContainer(hero, body, footer))
     }
 
