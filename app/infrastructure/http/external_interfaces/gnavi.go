@@ -37,6 +37,7 @@ type GnaviRest struct {
     Category   string        `json:"category"`
     Url        string        `json:"url"`
     ImageUrl   GnaviImageUrl `json:"image_url"`
+    OpenTime   string        `json:"opentime"`
     GnaviCodes GnaviCode     `json:"code"`
 }
 
@@ -78,7 +79,17 @@ func (gnavi *gnavi) GetRestaurants(latitude float64, longitude float64, isLunch 
         }
 
         imageUrls := []string{rest.ImageUrl.ShopImage1, rest.ImageUrl.ShopImage2}
-        restaurant := model.Restaurant{rest.Id, rest.Name, rest.NameKana, rest.Latitude, rest.Longitude, rest.Category, rest.Url, imageUrls, rest.UpdateDate}
+        restaurant := model.Restaurant{
+            Id:         rest.Id,
+            Name:       rest.Name,
+            NameKana:   rest.NameKana,
+            Latitude:   rest.Latitude,
+            Longitude:  rest.Longitude,
+            Category:   rest.Category,
+            OpenTime:   rest.OpenTime,
+            Url:        rest.Url,
+            ImageUrls:  imageUrls,
+            UpdateDate: rest.UpdateDate}
         restaurants = append(restaurants, &restaurant)
     }
 

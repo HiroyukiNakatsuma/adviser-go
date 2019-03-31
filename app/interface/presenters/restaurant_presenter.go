@@ -31,26 +31,26 @@ func (restaurantPresenter *RestaurantPresenter) BuildReplyContent(rests []*model
 
     var contents []*linebot.BubbleContainer
     for _, rest := range rests {
-        hero := newHeroBlock(restaurantPresenter.imageUrl(rest.ImageUrls), rest.Url)
-        body := newBodyBlock(rest.Name)
-        footer := newFooterBlock(rest.Url)
+        hero := newHeroBlock(rest)
+        body := newBodyBlock(rest)
+        footer := newFooterBlock(rest)
         contents = append(contents, newBubbleContainer(hero, body, footer))
     }
 
     return linebot.NewFlexMessage(altText, newCarouselContainer(contents))
 }
 
-func newHeroBlock(imageUrl string, shopUrl string) *linebot.ImageComponent {
+func newHeroBlock(rest *model.Restaurant) *linebot.ImageComponent {
     return &linebot.ImageComponent{
         Type:        imageComponentType,
-        URL:         imageUrl,
+        URL:         imageUrl(rest.ImageUrls),
         Size:        "full",
         AspectRatio: "4:3",
         AspectMode:  "cover",
-        Action:      linebot.NewURIAction("image", shopUrl)}
+        Action:      linebot.NewURIAction("image", rest.Url)}
 }
 
-func newBodyBlock(name string) *linebot.BoxComponent {
+func newBodyBlock(rest *model.Restaurant) *linebot.BoxComponent {
     return &linebot.BoxComponent{
         Type:    boxComponentType,
         Layout:  "vertical",
@@ -58,7 +58,7 @@ func newBodyBlock(name string) *linebot.BoxComponent {
         Contents: []linebot.FlexComponent{
             &linebot.TextComponent{
                 Type:   textComponentType,
-                Text:   name,
+                Text:   rest.Name,
                 Weight: "bold",
                 Size:   "lg"},
             &linebot.BoxComponent{
@@ -66,15 +66,32 @@ func newBodyBlock(name string) *linebot.BoxComponent {
                 Layout:  "vertical",
                 Spacing: "sm",
                 Contents: []linebot.FlexComponent{
-                    &linebot.TextComponent{
-                        Type:  textComponentType,
-                        Text:  gnaviCreditText,
-                        Wrap:  true,
-                        Color: "#666666",
-                        Size:  "xs"}}}}}
+                    newDefinition("Time", rest.OpenTime),
+                    newDefinition("Credit", gnaviCreditText)}}}}
 }
 
-func newFooterBlock(shopUrl string) *linebot.BoxComponent {
+func newDefinition(title string, desc string) *linebot.BoxComponent {
+    var titleFlex = 1
+    var descriptionFlex = 5
+    return &linebot.BoxComponent{
+        Contents: []linebot.FlexComponent{
+            &linebot.TextComponent{
+                Type:  textComponentType,
+                Text:  title,
+                Color: "#aaaaaa",
+                Flex:  &titleFlex,
+                Size:  "xs"},
+            &linebot.TextComponent{
+                Type:  textComponentType,
+                Text:  desc,
+                Wrap:  true,
+                Color: "#666666",
+                Flex:  &descriptionFlex,
+                Size:  "xs"}}}
+
+}
+
+func newFooterBlock(rest *model.Restaurant) *linebot.BoxComponent {
     return &linebot.BoxComponent{
         Type:    boxComponentType,
         Layout:  "vertical",
@@ -84,7 +101,7 @@ func newFooterBlock(shopUrl string) *linebot.BoxComponent {
                 Type:   buttonComponentType,
                 Style:  "link",
                 Height: "sm",
-                Action: linebot.NewURIAction(detailLabel, shopUrl)}}}
+                Action: linebot.NewURIAction(detailLabel, rest.Url)}}}
 }
 
 func newBubbleContainer(hero *linebot.ImageComponent, body *linebot.BoxComponent, footer *linebot.BoxComponent) *linebot.BubbleContainer {
@@ -101,7 +118,7 @@ func newCarouselContainer(contents []*linebot.BubbleContainer) *linebot.Carousel
         Contents: contents}
 }
 
-func (restaurantPresenter *RestaurantPresenter) imageUrl(urls []string) string {
+func imageUrl(urls []string) string {
     for _, url := range urls {
         if url != "" {
             return url
